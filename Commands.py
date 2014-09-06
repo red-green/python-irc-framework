@@ -1,6 +1,8 @@
 # coding=utf8
-import sys, os, time, math
+import sys, os, time, math, random
 import Irc, Transactions, Blocknotify, Logger, Global, Hooks, Config
+
+ri = lambda a,b: str(random.randint(a,b))
 
 commands = {}
 
@@ -86,8 +88,20 @@ def tip(req, arg):
 			return req.reply_private(to + " is not online")
 		else:
 			return req.reply_private(to + " is not identified with freenode services")
-	if arg[1] == "all":
-		arg[1] = str(Transactions.balance(acct))
+	arg[1] = {
+		'all':str(Transactions.balance(acct)),
+		'dogecar':'98',
+		'joshwise':'98',
+		'hack':'1337',
+		'leet':'1337',
+		'elite':'1337',
+		'blazeit':'420',
+		'flip':ri(1,2),
+		'roll':ri(1,10),
+		'megaroll':ri(1,100),
+		'gigaroll':ri(1,1000),
+		'200m','200000000'
+		}.get(arg[1].lower(),arg[1])
 	try:
 		amount = float(arg[1])
 		if math.isnan(amount):
